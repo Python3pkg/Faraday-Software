@@ -29,7 +29,7 @@ PROXY_MESSAGE_EXPERIMENTAL_PORT = 3
 PROXY_GET_TIMEOUT = 1  #Second(s)
 
 #Print debug information about proxy port listening
-print "Receiver operating TCP Localhost port:", faraday_1.FLASK_PORT
+print("Receiver operating TCP Localhost port:", faraday_1.FLASK_PORT)
 
 #Setup variables for receiving
 data = None
@@ -42,7 +42,7 @@ while True:
     #Check if data is False (False means that the Get() function timed out), if not then display new data
     if (data is not None) and ('error' not in data):
         #print "Received Message RAW", repr(data[0]['data'])
-        print "Received Message Decoded:", faraday_1.DecodeRawPacket(data[0]['data'])
+        print("Received Message Decoded:", faraday_1.DecodeRawPacket(data[0]['data']))
 
         #Set data = False so that the function loop can properly wait until the next data without printing last received data over and over
         data = None

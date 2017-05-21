@@ -1,6 +1,6 @@
 import faraday_msg
 import threading
-import Queue
+import queue
 
 
 class TransmitObject(object):
@@ -58,7 +58,7 @@ class ReceiveObject(threading.Thread):
         # Create receiver application object
         self.faraday_rx_msg_object = faraday_msg.MessageAppRx()
         threading.Thread.__init__(self)
-        self.fifo = Queue.Queue(0)
+        self.fifo = queue.Queue(0)
         return
 
     def run(self):

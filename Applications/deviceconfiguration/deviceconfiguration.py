@@ -5,7 +5,7 @@ import logging.config
 import os
 import sys
 import json
-import ConfigParser
+import configparser
 import base64
 
 from flask import Flask
@@ -27,7 +27,7 @@ logger = logging.getLogger('deviceconfiguration')
 
 # Load Telemetry Configuration from telemetry.ini file
 # Should have common file for apps...
-deviceConfig = ConfigParser.RawConfigParser()
+deviceConfig = configparser.RawConfigParser()
 deviceConfig.read('deviceconfiguration.ini')
 
 # Initialize proxy object
@@ -56,7 +56,7 @@ def unitconfig():
             nodeid = request.args.get("nodeid", "%")
 
             # Read configuration file
-            telemetryconfig = ConfigParser.RawConfigParser()
+            telemetryconfig = configparser.RawConfigParser()
             telemetryconfig.read('faraday_config.ini')
 
             # Create dictionaries of each config section
@@ -177,13 +177,13 @@ def unitconfig():
                 pickled_parsed_config_dict_b64 = base64.b64encode(pickled_parsed_config_dict)
 
             except ValueError as e:
-                print e
+                print(e)
             except IndexError as e:
-                print e
+                print(e)
             except KeyError as e:
-                print e
-            except StandardError as e:
-                print e
+                print(e)
+            except Exception as e:
+                print(e)
 
         except ValueError as e:
             logger.error("ValueError: " + str(e))

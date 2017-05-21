@@ -10,7 +10,7 @@
 #-------------------------------------------------------------------------------
 
 import os
-import ConfigParser
+import configparser
 import json
 import base64
 import sys
@@ -21,7 +21,7 @@ from flask import request
 from faraday.hermes import hermesobject
 
 # Open configuration INI
-config = ConfigParser.RawConfigParser()
+config = configparser.RawConfigParser()
 filename = os.path.abspath("hermes.ini")
 config.read(filename)
 
@@ -32,7 +32,7 @@ dictmsgobj = {}
 def configparse():
     """ Parses configuration file for callsigns and node ID and returns them in JSON format"""
     local = {}
-    units = range(0, config.getint('PROXY', 'UNITS'))
+    units = list(range(0, config.getint('PROXY', 'UNITS')))
 
     for unit in units:
         # TODO We don't really check for valid input here yet
@@ -111,10 +111,10 @@ def message():
                 {"status": "Posted Packet(s)"}), 200
 
         except KeyError as e:
-            print "KeyError:", e
+            print("KeyError:", e)
 
         except:
-            print "Unexpected Error:", sys.exc_info()[0]
+            print("Unexpected Error:", sys.exc_info()[0])
 
     # If GET
     else:

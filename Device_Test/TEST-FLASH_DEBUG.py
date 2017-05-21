@@ -1,5 +1,5 @@
-import devicetest
-import proxy_settings
+from . import devicetest
+from . import proxy_settings
 
 import time
 
@@ -13,23 +13,23 @@ user_input = ''
 
 try:
     rx_debug = devicetest.GetDebugFlash()
-    print "---Current DEBUG Flash Values---"
+    print("---Current DEBUG Flash Values---")
     for key in rx_debug:
-        print key, " = ", rx_debug[key]
+        print(key, " = ", rx_debug[key])
 
 except:
-    print "Failed to get telemetry packet!"
+    print("Failed to get telemetry packet!")
 
 while user_input != 'q':
-    user_input = raw_input('\nHit Enter to RESET Faraday flash DEBUG memory value. Type q to quit.')
+    user_input = input('\nHit Enter to RESET Faraday flash DEBUG memory value. Type q to quit.')
     if user_input == '':
         try:
             devicetest.ResetDebugFlash()
-            print "Sleeping 3 seconds."
+            print("Sleeping 3 seconds.")
             time.sleep(3)
             rx_debug = devicetest.GetDebugFlash()
-            print "---Updated DEBUG Flash Values---"
+            print("---Updated DEBUG Flash Values---")
             for key in rx_debug:
-                print key, " = ", rx_debug[key]
+                print(key, " = ", rx_debug[key])
         except:
-            print "Failed to get telemetry packet!"
+            print("Failed to get telemetry packet!")

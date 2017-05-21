@@ -1,13 +1,13 @@
-import createtiscripter
+from . import createtiscripter
 import sys
 import subprocess
-import faradayftdi
+from . import faradayftdi
 
 filename = sys.argv[1]
 comport = sys.argv[2]
 
-print "FILE:", filename
-print "COMM:", comport
+print("FILE:", filename)
+print("COMM:", comport)
 
 test = createtiscripter.CreateTiBslScript(filename, comport)
 

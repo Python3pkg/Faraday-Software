@@ -42,7 +42,7 @@ faraday_parser = telemetryparser.TelemetryParse()
 
 ## ECHO MESSAGE
 
-print "/n** Beginning ECHO command test** /n"
+print("/n** Beginning ECHO command test** /n")
 
 
 def TestEchoUart():
@@ -63,18 +63,18 @@ def TestEchoUart():
             # Now parse data again
             b64_data = rx_echo_raw[0]['data']
             echo_decoded = faraday_1.DecodeRawPacket(b64_data)
-            print "\n\nSent:", repr(originalmsg)
-            print "\nReceived:", repr(echo_decoded[0:len(originalmsg)])  #Note that ECHO sends back a fixed packed regardless. Should update to send back exact length.
+            print("\n\nSent:", repr(originalmsg))
+            print("\nReceived:", repr(echo_decoded[0:len(originalmsg)]))  #Note that ECHO sends back a fixed packed regardless. Should update to send back exact length.
             echo_len = len(originalmsg)
             if(originalmsg == echo_decoded[0:echo_len]):
                 #print "TEST: ECHO - Success"
                 status_passes += 1
             else:
-                print "TEST: ECHO - Fail"
+                print("TEST: ECHO - Fail")
                 status_fails += 1
         except:
             status_fails += 1
-            print "ECHO Failed due to UART RX timeout!"
+            print("ECHO Failed due to UART RX timeout!")
         #Delay data transmissions to reduce throughput. This is a known result of the non-optimized or flow controlled buffers of Faraday
         time.sleep(1)
     #Test completed, return results
@@ -120,11 +120,11 @@ def GetDebugFlash():
 # ## Reset Device Debug Flash
 # ############
 def ResetDebugFlash():
-    print "*** Pre-Debug RESET ***"
+    print("*** Pre-Debug RESET ***")
     rx_debug_data_parsed_initial = GetDebugFlash()
 
     if DEBUG:
-        print repr(rx_debug_data_parsed_initial)
+        print(repr(rx_debug_data_parsed_initial))
 
     # Reset the device debug flash counters and data
     faraday_1.POST(local_device_callsign, local_device_node_id, faraday_1.CMD_UART_PORT, faraday_cmd.CommandLocalResetDeviceDebugFlash())
@@ -132,39 +132,39 @@ def ResetDebugFlash():
     # Sleep to allow unit to perform reset and be ready for next command
     time.sleep(3)
 
-    print "*** Post-Debug RESET ***"
+    print("*** Post-Debug RESET ***")
     rx_debug_data_parsed_reset = GetDebugFlash()
 
     if DEBUG:
-        print repr(rx_debug_data_parsed_reset)
+        print(repr(rx_debug_data_parsed_reset))
 
     debug_test_pass = True
 
     for key in rx_debug_data_parsed_reset:
         if rx_debug_data_parsed_reset[key] == 0 and debug_test_pass:
             if DEBUG:
-                print key, rx_debug_data_parsed_reset[key]
+                print(key, rx_debug_data_parsed_reset[key])
         else:
             if DEBUG:
-                print key, rx_debug_data_parsed_reset[key], "-- FAIL --"
+                print(key, rx_debug_data_parsed_reset[key], "-- FAIL --")
             debug_test_pass = False
 
     if debug_test_pass:
-        print "DEBUG Flash RESET = PASS"
+        print("DEBUG Flash RESET = PASS")
     else:
-        print "DEBUG Flash RESET = FAIL"
+        print("DEBUG Flash RESET = FAIL")
 
 
 def TestGPIOLEDs():
     # WARNING: Make sure RED and GREEN LED's are allowed to be commanded in firmware!
     # Turn Both LED 1 and LED 2 ON simultaneously
-    print "Turning ON both the Green and Red LED (LED #1 + LED #2)"
+    print("Turning ON both the Green and Red LED (LED #1 + LED #2)")
     command = faraday_cmd.CommandLocalGPIO((gpioallocations.LED_1 | gpioallocations.LED_2), 0, 0, 0, 0, 0)
     faraday_1.POST(local_device_callsign, local_device_node_id, faraday_1.CMD_UART_PORT, command)
     time.sleep(5)
 
     # Turn Both LED 1 and LED 2 OFF simultaneously
-    print "Turning Off both the Green and Red LED (LED #1 + LED #2)"
+    print("Turning Off both the Green and Red LED (LED #1 + LED #2)")
     command = faraday_cmd.CommandLocalGPIO(0, 0, 0, (gpioallocations.LED_1 | gpioallocations.LED_2), 0, 0)
     faraday_1.POST(local_device_callsign, local_device_node_id, faraday_1.CMD_UART_PORT, command)
 
@@ -201,14 +201,14 @@ def GetTelem3():
 def ReadTelemTemp(telemetry_parsed):
     #Get and print current CC430 ("board") temp
     int_boardtemp = telemetry_parsed['BOARDTEMP']
-    print "\nCurrent CC430 Temperature: %dC" % int_boardtemp
+    print("\nCurrent CC430 Temperature: %dC" % int_boardtemp)
 
     #Check if temp is inside of bounds (set wide for check if generall OK
     if int_boardtemp > 15 and int_boardtemp < 35:
-        print "Temperature Test: PASS"
+        print("Temperature Test: PASS")
         return True
     else:
-        print "Temperature Test: FAIL"
+        print("Temperature Test: FAIL")
         return False
 
 
@@ -251,14 +251,14 @@ def ReadGPSTelem(telem):
     strLonDir = telem['GPSLONGITUDEDIR']
     strHDOP = telem['GPSHDOP']
     if boolFix and float(strHDOP) > 0:
-        print "VALID GPS Signal Lock!"
-        print "Lat:", strLat, strLatDir
-        print "Lon:", strLon, strLonDir
-        print "HDOP", strHDOP
+        print("VALID GPS Signal Lock!")
+        print("Lat:", strLat, strLatDir)
+        print("Lon:", strLon, strLonDir)
+        print("HDOP", strHDOP)
         return True
 
     else:
-        print "NO GPS Lock"
+        print("NO GPS Lock")
         return False
 
 # ############
@@ -310,7 +310,7 @@ def VerifyIdealDiodeBlock(telemetry_parsed):
 
 
 def ResetCONFIGFlash():
-    print "*** Pre-Debug RESET ***"
+    print("*** Pre-Debug RESET ***")
 
     # Reset the device CONFIG flash counters and data
     faraday_1.POST(local_device_callsign, local_device_node_id, faraday_1.CMD_UART_PORT,
@@ -318,14 +318,14 @@ def ResetCONFIGFlash():
 
     # Sleep to allow unit to perform reset and be ready for next command
     time.sleep(3)
-    print "RESET"
+    print("RESET")
 
 
 def EnableGPIO():
     # P3 - 0, 1, 2
     # P4 - 0, 1, 2, 3, 4
     # P5 - 4
-    print "Turning ON all GPIO outputs"
+    print("Turning ON all GPIO outputs")
     command = faraday_cmd.CommandLocalGPIO((gpioallocations.DIGITAL_IO_0 | gpioallocations.DIGITAL_IO_1 | gpioallocations.DIGITAL_IO_2), gpioallocations.DIGITAL_IO_3 | gpioallocations.DIGITAL_IO_4 | gpioallocations.DIGITAL_IO_5 | gpioallocations.DIGITAL_IO_6 | gpioallocations.DIGITAL_IO_7, gpioallocations.DIGITAL_IO_8, 0, 0, 0)
     faraday_1.POST(local_device_callsign, local_device_node_id, faraday_1.CMD_UART_PORT, command)
 
@@ -334,7 +334,7 @@ def DisableGPIO():
     # P3 - 0, 1, 2
     # P4 - 0, 1, 2, 3, 4
     # P5 - 4
-    print "Turning OFF all GPIO outputs"
+    print("Turning OFF all GPIO outputs")
     command = faraday_cmd.CommandLocalGPIO(
         0, 0, 0, (gpioallocations.DIGITAL_IO_0 | gpioallocations.DIGITAL_IO_1 | gpioallocations.DIGITAL_IO_2),
         gpioallocations.DIGITAL_IO_3 | gpioallocations.DIGITAL_IO_4 | gpioallocations.DIGITAL_IO_5 | gpioallocations.DIGITAL_IO_6 | gpioallocations.DIGITAL_IO_7,

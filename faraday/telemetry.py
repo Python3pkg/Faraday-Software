@@ -12,7 +12,7 @@
 import time
 import logging.config
 import threading
-import ConfigParser
+import configparser
 from collections import deque
 import os
 import sqlite3
@@ -30,14 +30,14 @@ try:
     logging.config.fileConfig('loggingConfig.ini')
     logger = logging.getLogger('telemetry')
 
-except ConfigParser.Error as e:
+except configparser.Error as e:
     #  File missing, indicate error and infinite loop. Logger isn't available.
     while True:
         print("ERROR: loggingConfig.ini missing")
         time.sleep(1)
 
 # Load Telemetry Configuration from telemetry.ini file
-telemetryConfig = ConfigParser.RawConfigParser()
+telemetryConfig = configparser.RawConfigParser()
 telemetryFile = telemetryConfig.read('telemetry.ini')
 
 if len(telemetryFile) == 0:
@@ -78,7 +78,7 @@ def telemetry_worker(config):
         # Pragmatically create descriptors for each Faraday connected to Proxy
         count = config.getint("TELEMETRY", "UNITS")
 
-    except ConfigParser.Error as e:
+    except configparser.Error as e:
             #  Error reading in configs so get stuck in infinite loop indicating problem
             while True:
                 logger.error("ConfigParse.Error: " + str(e))
@@ -89,7 +89,7 @@ def telemetry_worker(config):
             callsign = config.get("TELEMETRY", "UNIT" + str(num) + "CALL").upper()
             nodeid = config.get("TELEMETRY", "UNIT" + str(num) + "ID")
 
-        except ConfigParser.Error as e:
+        except configparser.Error as e:
             #  Error reading in configs so get stuck in infinite loop indicating problem
             while True:
                 logger.error("ConfigParse.Error: " + str(e))
@@ -259,7 +259,7 @@ def rawTelemetry():
             #  Optional, set limit to largest value of any radio queue size
             temp = []
             #  telemetryDicts is telemetryWorker queue
-            for key, value in telemetryDicts.iteritems():
+            for key, value in telemetryDicts.items():
                 temp.append(len(value))
             limit = int(max(temp))
 
@@ -279,7 +279,7 @@ def rawTelemetry():
     except KeyError as e:
         logger.error("KeyError: " + str(e))
         return json.dumps({"error": str(e)}), 400
-    except StandardError as e:
+    except Exception as e:
         logger.error("StandardError: " + str(e))
         return json.dumps({"error": str(e)}), 400
 
@@ -295,7 +295,7 @@ def rawTelemetry():
         if callsign is None and nodeId is None:
             # Iterate through each faraday radio connected via USB
             #  telemetryDicts is telemetryWorker queue
-            for key, value in telemetryDicts.iteritems():
+            for key, value in telemetryDicts.items():
                 # Make sure queue actually has data in it
                 if (len(value) > 0):
                     station = {}
@@ -346,7 +346,7 @@ def rawTelemetry():
     except KeyError as e:
         logger.error("KeyError: " + str(e))
         return json.dumps({"error": str(e)}), 400
-    except StandardError as e:
+    except Exception as e:
         logger.error("StandardError: " + str(e))
         return json.dumps({"error": str(e)}), 400
 
@@ -391,7 +391,7 @@ def stations():
     except ValueError as e:
         logger.error("ValueError: " + str(e))
         return json.dumps({"error": str(e)}), 400
-    except StandardError as e:
+    except Exception as e:
         logger.error("StandardError: " + str(e))
         return json.dumps({"error": str(e)}), 400
 
@@ -443,7 +443,7 @@ def initDB():
         dbFilename = telemetryConfig.get("DATABASE", "FILENAME")
         dbSchema = telemetryConfig.get("DATABASE", "SCHEMANAME")
 
-    except ConfigParser.Error as e:
+    except configparser.Error as e:
         logger.error("ConfigParse.Error: " + str(e))
         return False
 
@@ -541,7 +541,7 @@ def sqlInsert(data):
     try:
         db = telemetryConfig.get("DATABASE", "FILENAME")
 
-    except ConfigParser.Error as e:
+    except configparser.Error as e:
         logger.error("ConfigParse.Error: " + str(e))
         return False
 
@@ -617,9 +617,9 @@ def queryDb(parameters):
     #Check for timeTuple = None
     try:
         if timeTuple is None:
-            raise StandardError("Start and Stop times caused and error")
+            raise Exception("Start and Stop times caused and error")
 
-    except StandardError as e:
+    except Exception as e:
         logger.error("StandardError: " + str(e))
         return sqlData
 
@@ -652,7 +652,7 @@ def queryDb(parameters):
     try:
         dbFilename = telemetryConfig.get("DATABASE", "FILENAME")
 
-    except ConfigParser.Error as e:
+    except configparser.Error as e:
         logger.error("ConfigParse.Error: " + str(e))
         return sqlData
 
@@ -682,11 +682,11 @@ def queryDb(parameters):
         rows = cur.fetchall()
         for row in rows:
             rowData = {}
-            for parameter in row.keys():
+            for parameter in list(row.keys()):
                 rowData[parameter] = row[parameter]
             sqlData.append(rowData)
 
-    except StandardError as e:
+    except Exception as e:
         logger.error("StandardError: " + str(e))
         conn.close()
         return sqlData
@@ -756,7 +756,7 @@ def queryStationsDb(parameters):
     try:
         dbFilename = telemetryConfig.get("DATABASE", "FILENAME")
 
-    except ConfigParser.Error as e:
+    except configparser.Error as e:
         logger.error("ConfigParse.Error: " + str(e))
         return sqlData
 
@@ -787,11 +787,11 @@ def queryStationsDb(parameters):
         rows = cur.fetchall()
         for row in rows:
             rowData = {}
-            for parameter in row.keys():
+            for parameter in list(row.keys()):
                 rowData[parameter] = row[parameter]
             sqlData.append(rowData)
 
-    except StandardError as e:
+    except Exception as e:
         logger.error("StandardError: " + str(e))
         conn.close()
         return sqlData
@@ -853,7 +853,7 @@ def iso8601ToEpoch(startTime, endTime):
         startEpoch = time.mktime(start)
         endEpoch = time.mktime(end)
 
-    except StandardError as e:
+    except Exception as e:
         logger.error("StandardError: " + str(e))
         return None
 
@@ -885,7 +885,7 @@ def main():
         telemetryHost = telemetryConfig.get("FLASK", "HOST")
         telemetryPort = telemetryConfig.getint("FLASK", "PORT")
 
-    except ConfigParser.Error as e:
+    except configparser.Error as e:
         while True:
             logger.error("ConfigParse.Error: " + str(e))
             time.sleep(1)

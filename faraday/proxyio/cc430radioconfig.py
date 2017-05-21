@@ -36,11 +36,11 @@ def freq0_carrier_calculation(freq_desired, fxosc=26.0, debug=False):
     FREQx_list[3] = actual_freq_step_count_float  #append actual frequency for reference
 
     if debug:
-        print "vco_step_float (Hz) =", vco_step_float
-        print "24-bit word for desired frequency (int): ", int(desired_freq_step_count_int)
-        print "24-bit word for desired frequency (hex): ", hex(desired_freq_word_int)
+        print("vco_step_float (Hz) =", vco_step_float)
+        print("24-bit word for desired frequency (int): ", int(desired_freq_step_count_int))
+        print("24-bit word for desired frequency (hex): ", hex(desired_freq_word_int))
         #Calculate actual achieved frequency due to VCO step size
-        print "Actual result frequency (MHz): ", actual_freq_step_count_float
+        print("Actual result frequency (MHz): ", actual_freq_step_count_float)
 
     #RETURN list of FREQx bytes and actual achieved frequency
     return FREQx_list
@@ -70,6 +70,6 @@ def freq0_reverse_carrier_calculation(freq0, freq1, freq2, fxosc=26.0, debug=Fal
 
     actual_freq_mhz = (int(hex(freq0_shifted + freq1_shifted + freq2_shifted), 16) * vco_step_float) / float(10**6)
     if (debug == 1):
-        print freq0_shifted, freq1_shifted, freq2_shifted
-        print actual_freq_mhz
+        print(freq0_shifted, freq1_shifted, freq2_shifted)
+        print(actual_freq_mhz)
     return actual_freq_mhz

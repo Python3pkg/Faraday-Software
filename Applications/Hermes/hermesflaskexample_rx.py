@@ -4,11 +4,11 @@ import requests
 import base64
 import json
 import time
-import ConfigParser
+import configparser
 import os
 
 # Open configuration INI
-config = ConfigParser.RawConfigParser()
+config = configparser.RawConfigParser()
 filename = os.path.abspath("hermes.ini")
 config.read(filename)
 
@@ -38,7 +38,7 @@ def main():
     time until the queue is empty.
     """
 
-    print "Receiver Started On: ", localcallsign.upper() + '-' + str(localnodeid)
+    print("Receiver Started On: ", localcallsign.upper() + '-' + str(localnodeid))
     while True:
         # Sleep to release python process
         time.sleep(0.1)
@@ -48,8 +48,8 @@ def main():
             payload = {'localcallsign': localcallsign, 'localnodeid': localnodeid}
             rxdata = requests.get('http://127.0.0.1:8005/', params=payload)
             rx_dataitem = json.loads(base64.b64decode(rxdata.json()))
-            print "\nFROM:", rx_dataitem['source_callsign']
-            print "Message:", rx_dataitem['message']
+            print("\nFROM:", rx_dataitem['source_callsign'])
+            print("Message:", rx_dataitem['message'])
 
 
 if __name__ == '__main__':

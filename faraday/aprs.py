@@ -11,7 +11,7 @@
 
 import logging.config
 import threading
-import ConfigParser
+import configparser
 import socket
 import requests
 from time import sleep
@@ -22,7 +22,7 @@ logger = logging.getLogger('APRS')
 
 # Load Telemetry Configuration from telemetry.ini file
 # Should have common file for apps...
-aprsConfig = ConfigParser.RawConfigParser()
+aprsConfig = configparser.RawConfigParser()
 aprsConfig.read('aprs.ini')
 
 # Create and initialize dictionary queues
@@ -662,7 +662,7 @@ def generatePasscode(callsign):
                 callhash ^= ord(callList[i + 1])
                 i += 2
 
-            except StandardError as e:
+            except Exception as e:
                 logger.error(e)
                 callhash = None
                 break

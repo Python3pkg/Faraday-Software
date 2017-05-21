@@ -11,7 +11,7 @@
 
 import serial
 import threading
-import Queue
+import queue
 import time
 import struct
 import logging
@@ -28,8 +28,8 @@ class layer_2_object(object):
 class layer_2_protocol(threading.Thread):
     def __init__(self, com, baud, timeout_time):
         self.ser = serial.Serial(com, baud, timeout=timeout_time)
-        self.serial_rx_queue = Queue.Queue()  # Infinite
-        self.serial_tx_queue = Queue.Queue()  # Infinite
+        self.serial_rx_queue = queue.Queue()  # Infinite
+        self.serial_tx_queue = queue.Queue()  # Infinite
         self.enabled = True
 
         #Start
@@ -158,8 +158,8 @@ class Transmit_Insert_Data_Queue_Class(threading.Thread):
         This function initializes the class and it's variables.
         """
         #Initialize class variables
-        self.tx_data_queue = Queue.Queue()  #Queue FIFO with MAXSIZE=infinite - Queue to hold payload data raw
-        self.tx_packet_queue = Queue.Queue()  #Queue FIFO with MAXSIZE=infinite - Queue to hold fragmented and encapsulated data
+        self.tx_data_queue = queue.Queue()  #Queue FIFO with MAXSIZE=infinite - Queue to hold payload data raw
+        self.tx_packet_queue = queue.Queue()  #Queue FIFO with MAXSIZE=infinite - Queue to hold fragmented and encapsulated data
         self.enable_flag = True  #Class flag to keep loop running when True, aborts when False
         self.max_payload_size = 5
         self.tx_queue_item = ''
@@ -373,8 +373,8 @@ class Receiver_Datalink_Device_Class(threading.Thread):
     ################################################################################
     def __init__(self, input_channel, serial_physical_obj):
         #Initialize class variables
-        self.rx_packet_queue = Queue.Queue()
-        self.rx_data_payload_queue = Queue.Queue()
+        self.rx_packet_queue = queue.Queue()
+        self.rx_data_payload_queue = queue.Queue()
         self.logic_startbyte_received = False
         self.logic_escapebyte_received = False
         self.logic_stopbyte_received = False
@@ -462,7 +462,7 @@ class Receiver_Datalink_Device_State_Parser_Class(threading.Thread):
     ################################################################################
     def __init__(self, input_channel, serial_physical_obj):
         #Initialize class variables
-        self.rx_packet_queue = Queue.Queue()
+        self.rx_packet_queue = queue.Queue()
         self.enable_flag = True  #Class flag to keep loop running when True, aborts when False
         self.encapsulate_startbyte = chr(0x7b)  #Ensure these are the same as the self.insert_data_class escapes!
         self.encapsulate_stopbyte = chr(0x7c)  #Ensure these are the same as the self.insert_data_class escapes!

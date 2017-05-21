@@ -130,7 +130,7 @@ class proxyio(object):
                 # Data received, return JSON
                 return response.json()
 
-        except StandardError as e:
+        except Exception as e:
             self._logger.error("StandardError: " + str(e))
         except ValueError as e:
             self._logger.error("ValueError: " + str(e))
@@ -178,13 +178,13 @@ class proxyio(object):
         #Determine if timeout or got data
         if rx_data:
             if(debug):
-                print "Got Data!", "Time In-waiting:", timedelta, "Seconds"
+                print("Got Data!", "Time In-waiting:", timedelta, "Seconds")
             else:
                 pass
             return rx_data
         else:
             if(debug):
-                print "Failed to get data!", "Timeout =", sec_timeout
+                print("Failed to get data!", "Timeout =", sec_timeout)
             return False
 
     def FlushRxPort(self, local_device_callsign, local_device_id, uart_service_number):

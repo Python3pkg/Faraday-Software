@@ -1,8 +1,8 @@
 import faraday_msg
-import ConfigParser
+import configparser
 
 # Load configuration from transmitter INI file
-transmitter_config = ConfigParser.RawConfigParser()
+transmitter_config = configparser.RawConfigParser()
 transmitter_config.read('transmiter_configuration.ini')
 
 #Variables
@@ -24,12 +24,12 @@ message = ''
 # Loop while waiting for user input text to transmit
 while True:
     # Get user input text
-    message = raw_input("Message: ")
+    message = input("Message: ")
 
     # Create start, stop, and data packets (fragmented) from user input data using state machine tool
     faraday_tx_msg_sm.createmsgpackets(local_device_callsign, local_device_node_id, message)
 
     # Iterate through list of packets and transmit each
     for i in range(0, len(faraday_tx_msg_sm.list_packets), 1):
-        print 'TX', i, faraday_tx_msg_sm.list_packets[i]
+        print('TX', i, faraday_tx_msg_sm.list_packets[i])
         faraday_tx_msg_object.transmitframe(faraday_tx_msg_sm.list_packets[i])

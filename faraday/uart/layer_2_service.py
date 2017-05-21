@@ -9,10 +9,10 @@
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
 
-import layer_2_protocol
+from . import layer_2_protocol
 import threading
 import time
-import Queue
+import queue
 import logging
 
 # Get configured logger
@@ -21,8 +21,8 @@ logger = logging.getLogger('UARTStack')
 
 class Layer2ServiceObject(threading.Thread):
     def __init__(self, port, baud, timeout):
-        test_ser_queue_1 = Queue.Queue()  # Infinite
-        test_ser_queue_2 = Queue.Queue()  # Infinite
+        test_ser_queue_1 = queue.Queue()  # Infinite
+        test_ser_queue_2 = queue.Queue()  # Infinite
         self.protocol_object = layer_2_protocol.layer_2_object(port, baud, timeout)
         self.layer_initialized = True
         #Initialize class variables

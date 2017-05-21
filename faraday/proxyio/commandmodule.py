@@ -7,10 +7,10 @@
 # Copyright:   (c) Brent 2016
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-import cc430radioconfig
-import gpioallocations
+from . import cc430radioconfig
+from . import gpioallocations
 import struct
-import Checksum as checksum
+from . import Checksum as checksum
 
 COMMAND_DATAGRAM_LEN = 123
 COMMAND_DATAGRAM_ERROR_DETECTION_LEN = 2
@@ -66,7 +66,7 @@ def create_command_datagram(command, payload):
         return packet_final
     else:
         return False
-        print "ERROR - Create Command: Payload Too Long!", len(payload)
+        print("ERROR - Create Command: Payload Too Long!", len(payload))
 
 
 def create_rf_command_datagram(dest_callsign, dest_device_id, command, payload):
@@ -97,7 +97,7 @@ def create_rf_command_datagram(dest_callsign, dest_device_id, command, payload):
         pkt_cmd_datagram = pkt_cmd_datagram_struct.pack(command, len(payload), payload)
         pkt_cmd_datagram_error_detection = pkt_cmd_datagram_error_detection_struct.pack(checksum.compute_checksum_16(pkt_cmd_datagram, len(pkt_cmd_datagram)))
         pkt_cmd_datagram_final = pkt_cmd_datagram + pkt_cmd_datagram_error_detection
-        print repr(pkt_cmd_datagram_final)
+        print(repr(pkt_cmd_datagram_final))
 
         #Create RF Command for local device without Error Detection appended. NOTE Callsign must be in uppercase!
         pkt_rf_cmd = pkt_rf_cmd_struct.pack(str(dest_callsign).upper(), len(dest_callsign), dest_device_id, pkt_cmd_datagram_final)
@@ -107,7 +107,7 @@ def create_rf_command_datagram(dest_callsign, dest_device_id, command, payload):
         packet = pkt_rf_cmd + pkt_rf_error_detection
         return packet
     else:
-        print "Error: Callsign too long!"
+        print("Error: Callsign too long!")
 
 
 def create_fixed_length_packet(data, fixed_legth):
@@ -279,7 +279,7 @@ def create_gpio_command_packet(port3_on_bitmask, port4_on_bitmask, port5_on_bitm
     check_off_int |= port4_off_bitmask << 8
     check_off_int |= port5_off_bitmask
     if (check_on_int & check_off_int) != 0:
-        print "GPIO ON/OFF Bitmask check FAIL"
+        print("GPIO ON/OFF Bitmask check FAIL")
         return False
     else:
         gpio_cmd_pkt = gpio_cmd_pkt_struct.pack(port3_on_bitmask, port4_on_bitmask, port5_on_bitmask, port3_off_bitmask, port4_off_bitmask, port5_off_bitmask)

@@ -39,9 +39,9 @@ remote_id = 2
 user_input = ''
 
 while(user_input != "quit"):
-    user_input = raw_input("Text To Transmit:")
+    user_input = input("Text To Transmit:")
     command = faraday_cmd.CommandLocalExperimentalRfPacketForward(remote_callsign, remote_id, str(user_input))
-    print "Transmitting message:", user_input
+    print("Transmitting message:", user_input)
     faraday_1.POST(local_device_callsign, local_device_node_id, faraday_1.CMD_UART_PORT, command)
 
 ##message = "Testing RF Packet 1"

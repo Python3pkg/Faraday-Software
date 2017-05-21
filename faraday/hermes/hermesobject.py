@@ -1,6 +1,6 @@
-import hermesmessage
+from . import hermesmessage
 import threading
-import Queue
+import queue
 import time
 
 HERMES_UART_PORT = 3
@@ -62,7 +62,7 @@ class ReceiveObject(threading.Thread):
         # Create receiver application object
         self.faraday_rx_msg_object = hermesmessage.MessageAppRx()
         threading.Thread.__init__(self)
-        self.fifo = Queue.Queue(0)
+        self.fifo = queue.Queue(0)
         return
 
     def run(self):

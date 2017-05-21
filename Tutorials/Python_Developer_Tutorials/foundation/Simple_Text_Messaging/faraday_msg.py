@@ -67,8 +67,8 @@ class MsgStateMachineTx(object):
         list_message_fragments = [msg[i:i + self.MAX_MSG_DATA_LENGTH] for i in
                                   range(0, len(msg), self.MAX_MSG_DATA_LENGTH)]
         for item in list_message_fragments:
-            print item, "Frag Length", len(item)
-        print repr(list_message_fragments)
+            print(item, "Frag Length", len(item))
+        print(repr(list_message_fragments))
         return list_message_fragments
 
     def createmsgpackets(self, src_call, src_id, msg):
@@ -102,9 +102,9 @@ class MsgStateMachineTx(object):
 
         for i in range(0, len(list_msg_fragments), 1):
             data_packet = self.createdataframe(i, list_msg_fragments[i])
-            print "Pre-Pack:", repr(data_packet), len(data_packet)
+            print("Pre-Pack:", repr(data_packet), len(data_packet))
             data_packet = self.pkt_datagram_frame.pack(self.MSG_DATA, data_packet)
-            print "Post-Pack:", repr(data_packet), len(data_packet)
+            print("Post-Pack:", repr(data_packet), len(data_packet))
             list_data_packets.append(data_packet)
 
         # Insert all packets into final packet list in order of transmission
@@ -128,7 +128,7 @@ class MsgStateMachineTx(object):
         """
         # Calculate the number of fragmented packets
         frag_cnt = self.fragmentcount(msg_len)
-        print frag_cnt
+        print(frag_cnt)
         # Create packet
         packet = self.pkt_start.pack(src_call, len(src_call), src_id, frag_cnt)
         # Return packet created
@@ -145,9 +145,9 @@ class MsgStateMachineTx(object):
 
         :Return: A DATA packet
         """
-        print "create:", repr(data), len(data)
+        print("create:", repr(data), len(data))
         packet = self.pkt_data.pack(sequence, len(data), data)
-        print "created:", repr(packet), len(packet)
+        print("created:", repr(packet), len(packet))
         return packet
 
     def createendframe(self, msg_len):
@@ -213,7 +213,7 @@ class MessageAppTx(object):
         self.command = self.faraday_cmd.CommandLocalExperimentalRfPacketForward(self.destination_callsign,
                                                                                 self.destination_id,
                                                                                 payload)
-        print "Transmitting message:", repr(payload), "length:", len(payload)
+        print("Transmitting message:", repr(payload), "length:", len(payload))
         self.faraday_1.POST(self.local_device_callsign, self.local_device_node_id, self.faraday_1.CMD_UART_PORT,
                             self.command)
 
@@ -283,7 +283,7 @@ class MsgStateMachineRx(object):
             return message_assembled
         # Else Type (Error)
         else:
-            print "Incorrect frame type:", frame_type, repr(data)
+            print("Incorrect frame type:", frame_type, repr(data))
 
 
 class MessageAppRx(object):
@@ -312,8 +312,8 @@ class MessageAppRx(object):
         expected experimental RF packet forwarding messaging UART service port number. The retrieved packet will be
         parsed accordingly.
         """
-        print repr(self.faraday_Rx.GETWait(self.local_device_callsign, self.local_device_node_id,
-                                           self.faraday_Rx.CMD_UART_PORT, 1, False))
+        print(repr(self.faraday_Rx.GETWait(self.local_device_callsign, self.local_device_node_id,
+                                           self.faraday_Rx.CMD_UART_PORT, 1, False)))
 
     def parsepacketfromdatagram(self, datagram):
         """
@@ -348,8 +348,8 @@ class MessageAppRx(object):
                 # print unpacked_packet
                 message_assembled = self.faraday_Rx_SM.frameassembler(253, unpacked_packet)
                 return message_assembled
-        except Exception, err:
-            print "Fail - Exception", Exception, err
+        except Exception as err:
+            print("Fail - Exception", Exception, err)
 
     def rxmsgloop(self, local_callsign, local_callsign_id, uart_service_port_application_number, getwaittimeout):
         """

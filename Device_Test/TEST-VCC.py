@@ -1,5 +1,5 @@
-import devicetest
-import proxy_settings
+from . import devicetest
+from . import proxy_settings
 
 #Setup script to use correct proxy unit
 devicetest.local_device_callsign = proxy_settings.local_device_callsign
@@ -13,7 +13,7 @@ bitv = refv / 2 ** 12
 user_input = ''
 
 while user_input != 'q':
-    user_input = raw_input('\nHit Enter to retrieve Faraday VCC Voltage telemetry. Type q to quit.')
+    user_input = input('\nHit Enter to retrieve Faraday VCC Voltage telemetry. Type q to quit.')
     if user_input == '':
         try:
             telem = devicetest.GetTelem3()
@@ -22,6 +22,6 @@ while user_input != 'q':
                 pass
             else:
                 vcc = float(0.0)
-            print "VCC:", str(vcc)[0:4], "V"
+            print("VCC:", str(vcc)[0:4], "V")
         except:
-            print "Failed to get telemetry packet!"
+            print("Failed to get telemetry packet!")

@@ -11,7 +11,7 @@ and port specified in the configuration file proxy.ini.
 
 import base64
 from collections import deque
-import ConfigParser
+import configparser
 import json
 import logging.config
 import os
@@ -31,7 +31,7 @@ logging.config.fileConfig(filename)
 logger = logging.getLogger('Proxy')
 
 # Load Proxy Configuration from proxy.ini file
-proxyConfig = ConfigParser.RawConfigParser()
+proxyConfig = configparser.RawConfigParser()
 filename = os.path.abspath("proxy.ini")
 proxyConfig.read(filename)
 
@@ -81,7 +81,7 @@ def uart_worker(modem, getDicts, units, log):
                             item["port"] = port
                             sqlInsert(item)
 
-        except StandardError as e:
+        except Exception as e:
             logger.error("StandardError: " + str(e))
         except ValueError as e:
             logger.error("ValueError: " + str(e))
@@ -92,7 +92,7 @@ def uart_worker(modem, getDicts, units, log):
 
         # Check for data in the POST FIFO queue. This needs to check for
         # COM ports and create the necessary buffers on the fly
-        for port in postDicts[modem['unit']].keys():
+        for port in list(postDicts[modem['unit']].keys()):
             try:
                 count = len(postDicts[modem['unit']][port])
             except:
@@ -131,7 +131,7 @@ def testdb_read_worker():
         testNodeId = proxyConfig.getint("PROXY", "TESTNODEID")
         testRate = proxyConfig.getint("PROXY", "TESTRATE")
 
-    except ConfigParser.Error as e:
+    except configparser.Error as e:
         logger.error("ConfigParse.Error: " + str(e))
         return None
 
@@ -204,7 +204,7 @@ def proxy():
 
             if port is None:
                 # Required
-                raise StandardError("Missing 'port' parameter")
+                raise Exception("Missing 'port' parameter")
             else:
                 # Ensure port value is an Integer
                 port = int(port)
@@ -215,14 +215,14 @@ def proxy():
 
             if callsign is None:
                 # Required
-                raise StandardError("Missing 'callsign' parameter")
+                raise Exception("Missing 'callsign' parameter")
             else:
                 # Ensure callsign value is a string
                 callsign = str(callsign)
 
             if nodeid is None:
                 # Required
-                raise StandardError("Missing 'nodeid' parameter")
+                raise Exception("Missing 'nodeid' parameter")
             else:
                 nodeid = int(nodeid)
                 # Check to see if the Node ID is in the valid range
@@ -239,7 +239,7 @@ def proxy():
         except KeyError as e:
             logger.error("KeyError: " + str(e))
             return json.dumps({"error": str(e)}), 400
-        except StandardError as e:
+        except Exception as e:
             logger.error("StandardError: " + str(e))
             return json.dumps({"error": str(e)}), 400
 
@@ -262,7 +262,7 @@ def proxy():
                 {"error": "Error: No 'data' key in dictionary"}), 400
         else:
             total = len(data["data"])
-            print "length:", total
+            print("length:", total)
             sent = 0
             for item in data['data']:
                 try:
@@ -297,7 +297,7 @@ def proxy():
         try:
             if port is None:
                 # Required
-                raise StandardError("Missing 'port' parameter")
+                raise Exception("Missing 'port' parameter")
             else:
                 # Ensure port value is an Integer
                 port = int(port)
@@ -307,13 +307,13 @@ def proxy():
                         "Faraday Ports valid integer between 0-255")
             if callsign is None:
                 # Required
-                raise StandardError("Missing 'callsign' parameter")
+                raise Exception("Missing 'callsign' parameter")
             else:
                 # Ensure callsign value is a string
                 callsign = str(callsign)
             if nodeid is None:
                 # Required
-                raise StandardError("Missing 'nodeid' parameter")
+                raise Exception("Missing 'nodeid' parameter")
             else:
                 nodeid = int(nodeid)
                 # Check to see if the Node ID is in the valid range
@@ -351,7 +351,7 @@ def proxy():
         except KeyError as e:
             logger.error("KeyError: " + str(e))
             return json.dumps({"error": str(e)}), 400
-        except StandardError as e:
+        except Exception as e:
             logger.error("StandardError: " + str(e))
             return json.dumps({"error": str(e)}), 400
         # Return data from queue to RESTapi
@@ -383,7 +383,7 @@ def proxy():
         except KeyError as e:
             logger.error("KeyError: " + str(e))
             return json.dumps({"error": str(e)}), 400
-        except StandardError as e:
+        except Exception as e:
             logger.error("StandardError: " + str(e))
             return json.dumps({"error": str(e)}), 400
 
@@ -399,7 +399,7 @@ def callsign2COM():
     """ Associate configuration callsigns with serial COM ports"""
     local = {}
     num = int(proxyConfig.get('PROXY', 'units'))
-    units = range(0, num)
+    units = list(range(0, num))
 
     for unit in units:
         # TODO We don't really check for valid input here yet
@@ -433,7 +433,7 @@ def initDB():
         dbFilename = proxyConfig.get("DATABASE", "FILENAME")
         dbSchema = proxyConfig.get("DATABASE", "SCHEMANAME")
 
-    except ConfigParser.Error as e:
+    except configparser.Error as e:
         logger.error("ConfigParse.Error: " + str(e))
         return False
 
@@ -469,7 +469,7 @@ def openTestDB():
     try:
         testDbFilename = proxyConfig.get("TESTDATABASE", "FILENAME")
 
-    except ConfigParser.Error as e:
+    except configparser.Error as e:
         logger.error("ConfigParse.Error: " + str(e))
         return None
 
@@ -525,7 +525,7 @@ def sqlInsert(data):
     try:
         db = proxyConfig.get("DATABASE", "FILENAME")
 
-    except ConfigParser.Error as e:
+    except configparser.Error as e:
         logger.error("ConfigParse.Error: " + str(e))
         return False
 
@@ -569,7 +569,7 @@ def main():
     try:
         log = proxyConfig.getboolean('PROXY', 'LOG')
         testmode = proxyConfig.getboolean('PROXY', 'TESTMODE')
-    except ConfigParser.Error as e:
+    except configparser.Error as e:
         logger.error("ConfigParse.Error: " + str(e))
         sys.exit(1)  # Sys.exit(1) is an error
 
@@ -582,12 +582,12 @@ def main():
     # global units
     try:
         units = callsign2COM()
-    except ConfigParser.NoSectionError as e:
+    except configparser.NoSectionError as e:
         logging.error(e)
         sys.exit(1)  # Sys.exit(1) is an error
 
     if testmode == 0:
-        for key, values in units.iteritems():
+        for key, values in units.items():
             unitDict[str(values["callsign"] + "-" + values["nodeid"])] = layer_4_service.faraday_uart_object(str(values["com"]), int(values["baudrate"]), int(values["timeout"]))
 
         for key in unitDict:
@@ -603,7 +603,7 @@ def main():
         # Start the flask server on localhost:8000
         proxyHost = proxyConfig.get("FLASK", "host")
         proxyPort = proxyConfig.getint("FLASK", "port")
-    except ConfigParser.Error as e:
+    except configparser.Error as e:
         logger.error("ConfigParse.Error: " + str(e))
         sys.exit(1)  # Sys.exit(1) is an error
 

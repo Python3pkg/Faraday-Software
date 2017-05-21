@@ -98,7 +98,7 @@ class FtdiD2xxCbusControlObject(object):
         try:
             ctypes.windll.kernel32.FreeLibrary(self.ftd2xxDll._handle)
         except:
-            print "FAILED DISCONNECT"
+            print("FAILED DISCONNECT")
         self.ftd2xxDll._handle = None
         return True
 

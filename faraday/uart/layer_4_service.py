@@ -9,11 +9,11 @@
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
 
-import layer_4_protocol
-import layer_2_service
+from . import layer_4_protocol
+from . import layer_2_service
 import threading
 import time
-import Queue
+import queue
 import struct
 import logging
 
@@ -56,8 +56,8 @@ class faraday_uart_object(threading.Thread):
         self.rx_unparsed = ''
         self.enabled = True
         self.uart_layer_output_status = True
-        self.transmit_datagram_queue = Queue.Queue(0)
-        self.receive_datagram_queue = Queue.Queue(0)
+        self.transmit_datagram_queue = queue.Queue(0)
+        self.receive_datagram_queue = queue.Queue(0)
         self.receive_parsed_queue_dict = {}  #Dictionary to manage multiple queues spurred
         self.layer_2_object = layer_2_service.Layer2ServiceObject(port, baud, timeout)
         self.transport_packet_struct = struct.Struct('BB123s')
@@ -145,13 +145,13 @@ class faraday_uart_object(threading.Thread):
             return None
 
     def RxPortListOpen(self):
-        return self.receive_parsed_queue_dict.keys()
+        return list(self.receive_parsed_queue_dict.keys())
 
     def RxPortItemCount(self, service_number):
         return self.receive_parsed_queue_dict[service_number].qsize()  # Note: .qsize() not reliable per documentation
 
     def receive_service_queue_open(self, service_number, queue_size):
-        self.receive_parsed_queue_dict[service_number] = Queue.Queue(queue_size)
+        self.receive_parsed_queue_dict[service_number] = queue.Queue(queue_size)
 
     def receive_service_queue_put(self, payload, service_number):
         # THIS FUNCTION POPS OLD DATA AND REPLACES WITH NEW DATA. WHY?

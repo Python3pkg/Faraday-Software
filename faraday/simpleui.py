@@ -13,7 +13,7 @@
 
 import json
 import logging.config
-import ConfigParser
+import configparser
 import os
 
 from flask import Flask
@@ -32,7 +32,7 @@ logging.config.fileConfig(filename)
 logger = logging.getLogger('SimpleUI')
 
 # Load configuration file
-simpleuiconfig = ConfigParser.RawConfigParser()
+simpleuiconfig = configparser.RawConfigParser()
 filename = os.path.abspath("simpleui.ini")
 simpleuiconfig.read(filename)
 

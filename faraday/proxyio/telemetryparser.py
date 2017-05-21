@@ -48,13 +48,13 @@ class TelemetryParse(object):
 
         #Perform debug actions if needed
         if debug:
-            print "\n--- Telemetry Datagram ---"
-            print "Telemetry Packet Type:", dictionaryData['PacketType']
-            print "Telemetry RF Source:", dictionaryData['RFSource']
-            print "Telemetry Payload Length:", dictionaryData['Payload_Length']
-            print "Telemetry Packet 16 Bit Checksum:", dictionaryData['PayloadData']
-            print "Telemetry Packet Payload Data:", repr(dictionaryData['ErrorDetection'])
-            print "\n"
+            print("\n--- Telemetry Datagram ---")
+            print("Telemetry Packet Type:", dictionaryData['PacketType'])
+            print("Telemetry RF Source:", dictionaryData['RFSource'])
+            print("Telemetry Payload Length:", dictionaryData['Payload_Length'])
+            print("Telemetry Packet 16 Bit Checksum:", dictionaryData['PayloadData'])
+            print("Telemetry Packet Payload Data:", repr(dictionaryData['ErrorDetection']))
+            print("\n")
         else:
             pass
 
@@ -191,47 +191,47 @@ class TelemetryParse(object):
 
         #Perform debug actions if needed
         if debug:
-            print "--- Telemetry Packet #3 ---"
-            print "Source Callsign", dictionaryData['SOURCECALLSIGN']
-            print "Source Callsign Length", dictionaryData['SOURCECALLSIGNLEN']
-            print "Source Callsign ID", dictionaryData['SOURCEID']
-            print "Destination Callsign", dictionaryData['DESTINATIONCALLSIGN']
-            print "Destination Callsign Length", dictionaryData['DESTINATIONCALLSIGNLEN']
-            print "Destination Callsign ID", dictionaryData['DESTINATIONID']
-            print "RTC Second", dictionaryData['RTCSEC']
-            print "RTC Minute", dictionaryData['RTCMIN']
-            print "RTC Hour", dictionaryData['RTCHOUR']
-            print "RTC Day", dictionaryData['RTCDAY']
-            print "RTC Day Of Week", dictionaryData['RTCDOW']
-            print "RTC Month", dictionaryData['RTCMONTH']
-            print "Year", dictionaryData['RTCYEAR']
-            print "GPS Lattitude", dictionaryData['GPSLATITUDE']
-            print "GPS Lattitude Direction", dictionaryData['GPSLATITUDEDIR']
-            print "GPS Longitude", dictionaryData['GPSLONGITUDE']
-            print "GPS Longitude Direction", dictionaryData['GPSLONGITUDEDIR']
-            print "GPS Altitude", dictionaryData['GPSALTITUDE']
-            print "GPS Altitude Units", dictionaryData['GPSALTITUDEUNITS']
-            print "GPS Speed", dictionaryData['GPSSPEED']
-            print "GPS Fix", dictionaryData['GPSFIX']
-            print "GPS HDOP", dictionaryData['GPSHDOP']
-            print "GPIO State Telemetry", dictionaryData['GPIOSTATE']
-            print "IO State Telemetry", dictionaryData['IOSTATE']
-            print "RF State Telemetry", dictionaryData['RFSTATE']
-            print "ADC 0", dictionaryData['ADC0']
-            print "ADC 1", dictionaryData['ADC1']
-            print "ADC 2", dictionaryData['ADC2']
-            print "ADC 3", dictionaryData['ADC3']
-            print "ADC 4", dictionaryData['ADC4']
-            print "ADC 5", dictionaryData['ADC5']
-            print "VCC", dictionaryData['VCC']
-            print "CC430 Temperature", dictionaryData['BOARDTEMP']
-            print "ADC 8", dictionaryData['ADC8']
+            print("--- Telemetry Packet #3 ---")
+            print("Source Callsign", dictionaryData['SOURCECALLSIGN'])
+            print("Source Callsign Length", dictionaryData['SOURCECALLSIGNLEN'])
+            print("Source Callsign ID", dictionaryData['SOURCEID'])
+            print("Destination Callsign", dictionaryData['DESTINATIONCALLSIGN'])
+            print("Destination Callsign Length", dictionaryData['DESTINATIONCALLSIGNLEN'])
+            print("Destination Callsign ID", dictionaryData['DESTINATIONID'])
+            print("RTC Second", dictionaryData['RTCSEC'])
+            print("RTC Minute", dictionaryData['RTCMIN'])
+            print("RTC Hour", dictionaryData['RTCHOUR'])
+            print("RTC Day", dictionaryData['RTCDAY'])
+            print("RTC Day Of Week", dictionaryData['RTCDOW'])
+            print("RTC Month", dictionaryData['RTCMONTH'])
+            print("Year", dictionaryData['RTCYEAR'])
+            print("GPS Lattitude", dictionaryData['GPSLATITUDE'])
+            print("GPS Lattitude Direction", dictionaryData['GPSLATITUDEDIR'])
+            print("GPS Longitude", dictionaryData['GPSLONGITUDE'])
+            print("GPS Longitude Direction", dictionaryData['GPSLONGITUDEDIR'])
+            print("GPS Altitude", dictionaryData['GPSALTITUDE'])
+            print("GPS Altitude Units", dictionaryData['GPSALTITUDEUNITS'])
+            print("GPS Speed", dictionaryData['GPSSPEED'])
+            print("GPS Fix", dictionaryData['GPSFIX'])
+            print("GPS HDOP", dictionaryData['GPSHDOP'])
+            print("GPIO State Telemetry", dictionaryData['GPIOSTATE'])
+            print("IO State Telemetry", dictionaryData['IOSTATE'])
+            print("RF State Telemetry", dictionaryData['RFSTATE'])
+            print("ADC 0", dictionaryData['ADC0'])
+            print("ADC 1", dictionaryData['ADC1'])
+            print("ADC 2", dictionaryData['ADC2'])
+            print("ADC 3", dictionaryData['ADC3'])
+            print("ADC 4", dictionaryData['ADC4'])
+            print("ADC 5", dictionaryData['ADC5'])
+            print("VCC", dictionaryData['VCC'])
+            print("CC430 Temperature", dictionaryData['BOARDTEMP'])
+            print("ADC 8", dictionaryData['ADC8'])
             #print "N/A Byte", dictionaryData['']
-            print "HAB Automatic Cutdown Timer State Machine State", dictionaryData['HABTIMERSTATE']
-            print "HAB Cutdown Event State Machine State", dictionaryData['HABCUTDOWNSTATE']
-            print "HAB Automatic Cutdown Timer Trigger Time", dictionaryData['HABTRIGGERTIME']
-            print "HAB Automatic Cutdown Timer Current Time", dictionaryData['HABTIMER']
-            print "EPOCH", dictionaryData['EPOCH']
+            print("HAB Automatic Cutdown Timer State Machine State", dictionaryData['HABTIMERSTATE'])
+            print("HAB Cutdown Event State Machine State", dictionaryData['HABCUTDOWNSTATE'])
+            print("HAB Automatic Cutdown Timer Trigger Time", dictionaryData['HABTRIGGERTIME'])
+            print("HAB Automatic Cutdown Timer Current Time", dictionaryData['HABTIMER'])
+            print("EPOCH", dictionaryData['EPOCH'])
         else:
             pass
 
@@ -239,7 +239,7 @@ class TelemetryParse(object):
         return dictionaryData
 
     def UnpackPacket_2(self, packet, debug=False):
-        print packet, len(packet)
+        print(packet, len(packet))
         """
         This function unpacks a telemetry packet type #2 (Device Debug Flash Data) from the raw packet supplied in the function argument.
 
@@ -287,21 +287,21 @@ class TelemetryParse(object):
 
         #Perform debug actions if needed
         if debug:
-            print "--- Telemetry Packet #2 ---"
-            print "Index[0]: Boot Count", dictionaryData['BootCounter']
-            print "Index[1]: Reset Count", dictionaryData['ResetCounter']
-            print "Index[2]: Brownout reset counter", dictionaryData['BrownoutCounter']
-            print "Index[3]: Reset / Non-maskable Interrupt counter", dictionaryData['Reset_NMICounter']
-            print "Index[4]: PMM Supervisor Low counter", dictionaryData['PMM_LowCounter']
-            print "Index[5]: PMM Supervisor High counter", dictionaryData['PMM_HighCounter']
-            print "Index[6]: PMM Supervisor Low - OVP counter", dictionaryData['PMM_OVP_LowCounter']
-            print "Index[7]: PMM Supervisor High - OVP counter", dictionaryData['PMM_OVP_HighCounter']
-            print "Index[8]: Watchdog timeout counter", dictionaryData['WatchdogTimeoutCounter']
-            print "Index[9]: Flash key violation counter", dictionaryData['FlashKeyViolationCounter']
-            print "Index[10]: FLL Unlock counter", dictionaryData['FLLUnlockCounter']
-            print "Index[11]: Peripheral / Config counter", dictionaryData['PeripheralConfigCounter']
-            print "Index[12]: Access violation counter", dictionaryData['AccessViolationCounter']
-            print "Index[13]: Firmware Revision", dictionaryData['FirmwareRevision'], repr(dictionaryData['FirmwareRevision'])
+            print("--- Telemetry Packet #2 ---")
+            print("Index[0]: Boot Count", dictionaryData['BootCounter'])
+            print("Index[1]: Reset Count", dictionaryData['ResetCounter'])
+            print("Index[2]: Brownout reset counter", dictionaryData['BrownoutCounter'])
+            print("Index[3]: Reset / Non-maskable Interrupt counter", dictionaryData['Reset_NMICounter'])
+            print("Index[4]: PMM Supervisor Low counter", dictionaryData['PMM_LowCounter'])
+            print("Index[5]: PMM Supervisor High counter", dictionaryData['PMM_HighCounter'])
+            print("Index[6]: PMM Supervisor Low - OVP counter", dictionaryData['PMM_OVP_LowCounter'])
+            print("Index[7]: PMM Supervisor High - OVP counter", dictionaryData['PMM_OVP_HighCounter'])
+            print("Index[8]: Watchdog timeout counter", dictionaryData['WatchdogTimeoutCounter'])
+            print("Index[9]: Flash key violation counter", dictionaryData['FlashKeyViolationCounter'])
+            print("Index[10]: FLL Unlock counter", dictionaryData['FLLUnlockCounter'])
+            print("Index[11]: Peripheral / Config counter", dictionaryData['PeripheralConfigCounter'])
+            print("Index[12]: Access violation counter", dictionaryData['AccessViolationCounter'])
+            print("Index[13]: Firmware Revision", dictionaryData['FirmwareRevision'], repr(dictionaryData['FirmwareRevision']))
         else:
             pass
 
@@ -336,11 +336,11 @@ class TelemetryParse(object):
 
         #Perform debug actions if needed
         if debug:
-            print "--- Telemetry Packet #1 ---"
-            print "Index[0]: RF Freq 2", dictionaryData['RF_Freq_2']
-            print "Index[1]: RF Freq 1", dictionaryData['RF_Freq_1']
-            print "Index[2]: RF Freq 0", dictionaryData['RF_Freq_0']
-            print "Index[3]: RF Power Bitmask", dictionaryData['RF_PATable']
+            print("--- Telemetry Packet #1 ---")
+            print("Index[0]: RF Freq 2", dictionaryData['RF_Freq_2'])
+            print("Index[1]: RF Freq 1", dictionaryData['RF_Freq_1'])
+            print("Index[2]: RF Freq 0", dictionaryData['RF_Freq_0'])
+            print("Index[3]: RF Power Bitmask", dictionaryData['RF_PATable'])
         else:
             pass
 
@@ -386,28 +386,28 @@ class TelemetryParse(object):
 
         #Perform debug actions if needed
         if debug:
-            print "--- Flash Information Segment D ---"
-            print "Index[0]: Flash Config Bitmask", format(parsed_packet[0], '#010b')
-            print "Index[1]: Local Callsign", parsed_packet[1]
-            print "Index[2]: Local Callsign Length", parsed_packet[2]
-            print "Index[3]: Local Callsign ID", parsed_packet[3]
-            print "Index[4]: Default Port 3 GPIO Bitmask", format(parsed_packet[4], '#010b')
-            print "Index[5]: Default Port 4 GPIO Bitmask", format(parsed_packet[5], '#010b')
-            print "Index[6]: Default Port 5 GPIO Bitmask", format(parsed_packet[6], '#010b')
-            print "Index[7]: Default Boot Frequency [0]", parsed_packet[7]
-            print "Index[8]: Default Boot Frequency [1]", parsed_packet[8]
-            print "Index[9]: Default Boot Frequency [2]", parsed_packet[9]
-            print "Index[10]: Default RF Power Amplifier Setting (PA Table)", parsed_packet[10]
-            print "Index[11]: Default GPS Latitude", parsed_packet[11]
-            print "Index[12]: Default GPS Latitude Direction", parsed_packet[12]
-            print "Index[13]: Default GPS Longitude", parsed_packet[13]
-            print "Index[14]: Default GPS Longitude Direction", parsed_packet[14]
-            print "Index[15]: Default GPS Altitude", parsed_packet[15]
-            print "Index[16]: Default GPS Altitude Units", parsed_packet[16]
-            print "Index[17]: Default GPS Boot Bitmask", format(parsed_packet[17], '#010b')
-            print "Index[18]: Default Telemetry Boot Bitmask", format(parsed_packet[18], '#010b')
-            print "Index[19]: Default UART Telemetry Interval", parsed_packet[19]
-            print "Index[20]: Default RF Telemetry Interval", parsed_packet[20]
+            print("--- Flash Information Segment D ---")
+            print("Index[0]: Flash Config Bitmask", format(parsed_packet[0], '#010b'))
+            print("Index[1]: Local Callsign", parsed_packet[1])
+            print("Index[2]: Local Callsign Length", parsed_packet[2])
+            print("Index[3]: Local Callsign ID", parsed_packet[3])
+            print("Index[4]: Default Port 3 GPIO Bitmask", format(parsed_packet[4], '#010b'))
+            print("Index[5]: Default Port 4 GPIO Bitmask", format(parsed_packet[5], '#010b'))
+            print("Index[6]: Default Port 5 GPIO Bitmask", format(parsed_packet[6], '#010b'))
+            print("Index[7]: Default Boot Frequency [0]", parsed_packet[7])
+            print("Index[8]: Default Boot Frequency [1]", parsed_packet[8])
+            print("Index[9]: Default Boot Frequency [2]", parsed_packet[9])
+            print("Index[10]: Default RF Power Amplifier Setting (PA Table)", parsed_packet[10])
+            print("Index[11]: Default GPS Latitude", parsed_packet[11])
+            print("Index[12]: Default GPS Latitude Direction", parsed_packet[12])
+            print("Index[13]: Default GPS Longitude", parsed_packet[13])
+            print("Index[14]: Default GPS Longitude Direction", parsed_packet[14])
+            print("Index[15]: Default GPS Altitude", parsed_packet[15])
+            print("Index[16]: Default GPS Altitude Units", parsed_packet[16])
+            print("Index[17]: Default GPS Boot Bitmask", format(parsed_packet[17], '#010b'))
+            print("Index[18]: Default Telemetry Boot Bitmask", format(parsed_packet[18], '#010b'))
+            print("Index[19]: Default UART Telemetry Interval", parsed_packet[19])
+            print("Index[20]: Default RF Telemetry Interval", parsed_packet[20])
         else:
             pass
 

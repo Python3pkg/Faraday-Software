@@ -65,7 +65,7 @@ class Msg_State_Machine_Tx(object):
     def CreateStartFrame(self, src_call, src_id, msg_len):
         #Calculate the number of fragmented packets
         frag_cnt = self.FragmentCount(msg_len)
-        print frag_cnt
+        print(frag_cnt)
         #Create packet
         packet = self.pkt_start.pack(src_call, len(src_call), src_id, frag_cnt)
         #Return packet created
@@ -110,5 +110,5 @@ class message_app(object):
         A basic function to transmit a raw payload to the intended destination unit.
         """
         self.command = self.faraday_cmd.CommandLocalExperimentalRfPacketForward(self.destination_callsign, self.destination_id, payload)
-        print "Transmitting message:", repr(payload)
+        print("Transmitting message:", repr(payload))
         self.faraday_1.POST(self.local_device_callsign, self.local_device_node_id, self.faraday_1.CMD_UART_PORT, self.command)

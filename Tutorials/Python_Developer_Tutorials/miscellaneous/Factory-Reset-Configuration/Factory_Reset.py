@@ -52,7 +52,7 @@ def get_telemetry():
     #Parse the Telemetry #3 packet
     rx_telemetry_packet_parsed = faraday_parser.UnpackPacket_3(rx_telemetry_datagram_extracted, debug=True)  #Debug ON
 
-    print "Parsed packet dictionary:", rx_telemetry_packet_parsed
+    print("Parsed packet dictionary:", rx_telemetry_packet_parsed)
 
 
 def factory_reset_configuration():

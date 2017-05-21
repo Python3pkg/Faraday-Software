@@ -7,7 +7,7 @@ import os
 import sys
 import requests
 import base64
-import cPickle
+import pickle
 import time
 
 # Add Faraday library to the Python path.
@@ -39,21 +39,21 @@ faraday_parser = telemetryparser.TelemetryParse()
 try:
     r = requests.get("http://127.0.0.1:8002", params={'callsign': str(local_device_callsign), 'nodeid': int(local_device_node_id)})
 except requests.exceptions.RequestException as e:  # This is the correct syntax
-    print e
+    print(e)
 
 #Print JSON dictionary device data from unit
 raw_unit_json = r.json()
 
 # Decode and depickle (serialize) device configuration parsed dictionary data
 b64_unit_json = base64.b64decode(raw_unit_json['data'])
-unit_configuration_dict = cPickle.loads(b64_unit_json)
+unit_configuration_dict = pickle.loads(b64_unit_json)
 
 
-print "\n************************************"
-print "PRIOR TO CONFIGURATION UPDATE"
-print "Unit Callsign-ID:\n", str(unit_configuration_dict['local_callsign'])[0:unit_configuration_dict['local_callsign_length']] + '-' + str(unit_configuration_dict['local_callsign_id'])
-print "RAW Unit JSON Data:", unit_configuration_dict
-print "************************************"
+print("\n************************************")
+print("PRIOR TO CONFIGURATION UPDATE")
+print("Unit Callsign-ID:\n", str(unit_configuration_dict['local_callsign'])[0:unit_configuration_dict['local_callsign_length']] + '-' + str(unit_configuration_dict['local_callsign_id']))
+print("RAW Unit JSON Data:", unit_configuration_dict)
+print("************************************")
 
 
 #########################################################################################
@@ -65,25 +65,25 @@ time.sleep(3)  # Sleep to allow unit to process, polling and slow
 try:
     r = requests.post('http://127.0.0.1:8002', params={'callsign': str(local_device_callsign), 'nodeid': int(local_device_node_id)})
 except requests.exceptions.RequestException as e:  # This is the correct syntax
-    print e
+    print(e)
 
 time.sleep(6)  # Sleep to allow unit to process, polling and slow, not sure why THIS slow...
 
 try:
     r = requests.get("http://127.0.0.1:8002", params={'callsign': str(local_device_callsign), 'nodeid': int(local_device_node_id)})
 except requests.exceptions.RequestException as e:  # This is the correct syntax
-    print e
+    print(e)
 
 #Print JSON dictionary device data from unit
 raw_unit_json = r.json()
 
 # Decode and depickle (serialize) device configuration parsed dictionary data
 b64_unit_json = base64.b64decode(raw_unit_json['data'])
-unit_configuration_dict = cPickle.loads(b64_unit_json)
+unit_configuration_dict = pickle.loads(b64_unit_json)
 
-print "\n************************************"
-print "POST CONFIGURATION UPDATE"
-print "Unit Callsign-ID:\n", str(unit_configuration_dict['local_callsign'])[0:unit_configuration_dict['local_callsign_length']] + '-' + str(unit_configuration_dict['local_callsign_id'])
-print "RAW Unit JSON Data:", unit_configuration_dict
+print("\n************************************")
+print("POST CONFIGURATION UPDATE")
+print("Unit Callsign-ID:\n", str(unit_configuration_dict['local_callsign'])[0:unit_configuration_dict['local_callsign_length']] + '-' + str(unit_configuration_dict['local_callsign_id']))
+print("RAW Unit JSON Data:", unit_configuration_dict)
 
-print "************************************"
+print("************************************")

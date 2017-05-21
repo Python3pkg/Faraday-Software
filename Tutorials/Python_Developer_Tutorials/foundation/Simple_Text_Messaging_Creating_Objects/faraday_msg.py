@@ -285,7 +285,7 @@ class MsgStateMachineRx(object):
             return message_assembled
         # Else Type (Error)
         else:
-            print "Incorrect frame type:", frame_type, repr(data)
+            print("Incorrect frame type:", frame_type, repr(data))
 
 
 class MessageAppRx(object):
@@ -314,8 +314,8 @@ class MessageAppRx(object):
         expected experimental RF packet forwarding messaging UART service port number. The retrieved packet will be
         parsed accordingly.
         """
-        print repr(self.faraday_Rx.GETWait(self.local_device_callsign, self.local_device_node_id,
-                                           self.faraday_Rx.CMD_UART_PORT, 1, False))
+        print(repr(self.faraday_Rx.GETWait(self.local_device_callsign, self.local_device_node_id,
+                                           self.faraday_Rx.CMD_UART_PORT, 1, False)))
 
     def parsepacketfromdatagram(self, datagram):
         """
@@ -350,8 +350,8 @@ class MessageAppRx(object):
                 # print unpacked_packet
                 message_assembled = self.faraday_Rx_SM.frameassembler(253, unpacked_packet)
                 return message_assembled
-        except Exception, err:
-            print "Fail - Exception", Exception, err
+        except Exception as err:
+            print("Fail - Exception", Exception, err)
 
     def rxmsgloop(self, local_callsign, local_callsign_id, uart_service_port_application_number, getwaittimeout):
         """

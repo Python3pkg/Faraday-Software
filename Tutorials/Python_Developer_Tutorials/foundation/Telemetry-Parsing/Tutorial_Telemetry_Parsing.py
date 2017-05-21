@@ -29,7 +29,7 @@ faraday_parser = telemetryparser.TelemetryParse()
 ## System Settings
 ############
 
-print "\n"
+print("\n")
 
 #Flush old data from UART service port
 faraday_1.FlushRxPort(local_device_callsign, local_device_node_id, faraday_1.TELEMETRY_PORT)
@@ -55,12 +55,12 @@ rx_settings_parsed = faraday_parser.UnpackPacket_1(rx_settings_pkt_extracted, de
 
 # Print current Faraday radio frequency
 faraday_freq_mhz = cc430radioconfig.freq0_reverse_carrier_calculation(rx_settings_parsed['RF_Freq_2'], rx_settings_parsed['RF_Freq_1'], rx_settings_parsed['RF_Freq_0'])
-print "Faraday's Current Frequency:", str(faraday_freq_mhz)[0:7], "MHz"
+print("Faraday's Current Frequency:", str(faraday_freq_mhz)[0:7], "MHz")
 
 ############
 ## Debug
 ############
-print "\n"
+print("\n")
 
 #Flush old data from UART service port
 faraday_1.FlushRxPort(local_device_callsign, local_device_node_id, faraday_1.TELEMETRY_PORT)
@@ -87,7 +87,7 @@ rx_debug_data_parsed = faraday_parser.UnpackPacket_2(rx_debug_data_pkt_extracted
 ############
 ## Telemetry
 ############
-print "\n"
+print("\n")
 
 #Flush old data from UART service port
 faraday_1.FlushRxPort(local_device_callsign, local_device_node_id, faraday_1.TELEMETRY_PORT)
@@ -111,4 +111,4 @@ rx_telemetry_datagram_extracted = faraday_parser.ExtractPaddedPacket(rx_telemetr
 #Parse the Telemetry #3 packet
 rx_telemetry_packet_parsed = faraday_parser.UnpackPacket_3(rx_telemetry_datagram_extracted, debug=True)  #Debug ON
 
-print "Parsed packet dictionary:", rx_telemetry_packet_parsed
+print("Parsed packet dictionary:", rx_telemetry_packet_parsed)

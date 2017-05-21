@@ -1,6 +1,6 @@
 import struct
-import cc430radioconfig
-import commandmodule
+from . import cc430radioconfig
+from . import commandmodule
 
 
 class DeviceConfigClass:
@@ -110,7 +110,7 @@ class DeviceConfigClass:
             self.basic_gpio_p5_bitmask = p5_bitmask
             return True
         else:
-            print "ERROR: Formatting!"
+            print("ERROR: Formatting!")
             return False
 
     def create_bitmask_configuration(self, device_programmed_bit):
@@ -182,7 +182,7 @@ class DeviceConfigClass:
             self.rf_PATable = patable_byte
             return True
         else:
-            print "ERROR: Frequency out of range!"
+            print("ERROR: Frequency out of range!")
             return False
 
     def update_gps(self, gps_boot_bitmask, latitude_str, latitude_dir_str, longitude_str, longitude_dir_str,
@@ -282,9 +282,9 @@ class DeviceConfigClass:
             return True
 
         else:
-            print "ERROR: GPS string(s) too long OR NMEA DMM formatting incorrect"
-            print "ERROR: Altitude must be {0}-{1}".format(self.MIN_ALTITUDE_METERS, self.MAX_ALTITUDE_METERS)
-            print "ERROR: Only numbers and a single decimal allowed"
+            print("ERROR: GPS string(s) too long OR NMEA DMM formatting incorrect")
+            print("ERROR: Altitude must be {0}-{1}".format(self.MIN_ALTITUDE_METERS, self.MAX_ALTITUDE_METERS))
+            print("ERROR: Only numbers and a single decimal allowed")
             return False
 
     def update_bitmask_gps_boot(self, gps_present_boot, gps_enable_boot):
